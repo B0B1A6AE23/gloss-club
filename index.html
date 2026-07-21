@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>GLOSS CLUB — Uñas que hablan por ti</title>
+<meta name="description" content="GLOSS CLUB, estudio de uñas maximalista. Gel, francesa Y2K, cat-eye, chrome y flores 3D. Reserva tu cupo de la semana.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FF2E93'/%3E%3Cpath d='M16 6l2.4 6.9 7.3.2-5.8 4.4 2.1 7-6-4.2-6 4.2 2.1-7-5.8-4.4 7.3-.2z' fill='%23FFE347'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://images.pexels.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Archivo+Black&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rosa:#FF2E93;
+    --lima:#C6FF47;
+    --cobalto:#2447F5;
+    --mantequilla:#FFE347;
+    --crema:#FFF4E4;
+    --negro:#1A0F1E;
+    --blanco:#FFFFFF;
+    --display:"Climate Crisis",cursive;
+    --black:"Archivo Black",sans-serif;
+    --body:"Instrument Sans",sans-serif;
+    --serif:"Instrument Serif",serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--rosa);scrollbar-width:none;overflow-x:clip}
+  html::-webkit-scrollbar{display:none}
+  body{
+    background:var(--rosa);color:var(--negro);
+    font-family:var(--body);font-size:17px;line-height:1.55;
+    overflow-x:clip;
+  }
+  ::selection{background:var(--negro);color:var(--lima)}
+  img{max-width:100%;display:block}
+  section{position:relative}
+
+  /* ============ CURSOR CUSTOM ============ */
+  @media (pointer:fine){
+    body.cursor-on, body.cursor-on a, body.cursor-on button{cursor:none}
+  }
+  #cursor{
+    position:fixed;top:0;left:0;z-index:300;pointer-events:none;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--negro);border:2px solid var(--crema);
+    display:none;place-items:center;
+    transform:translate(-50%,-50%);
+    transition:width .25s cubic-bezier(.23,1,.32,1),height .25s cubic-bezier(.23,1,.32,1),background .25s cubic-bezier(.23,1,.32,1);
+  }
+  #cursor span{
+    font-family:var(--black);font-size:0;color:var(--negro);
+    letter-spacing:.06em;transition:font-size .2s cubic-bezier(.23,1,.32,1);
+    user-select:none;
+  }
+  #cursor.grow{width:64px;height:64px;background:var(--lima)}
+  #cursor.drag{width:74px;height:74px;background:var(--mantequilla)}
+  #cursor.grow span,#cursor.drag span{font-size:11px}
+
+  /* ============ MARQUEES (CSS puro, compositor) ============ */
+  .marquee{
+    overflow:hidden;white-space:nowrap;
+    border-top:4px solid var(--negro);border-bottom:4px solid var(--negro);
+    background:var(--lima);color:var(--negro);
+    padding:14px 0;position:relative;z-index:5;
+  }
+  .marquee .track{
+    display:inline-flex;gap:2.2rem;width:max-content;
+    animation:marquee 20s linear infinite;
+    font-family:var(--black);font-size:clamp(18px,2.6vw,30px);
+    text-transform:uppercase;letter-spacing:.04em;
+    align-items:center;padding-right:2.2rem;
+  }
+  .marquee .track svg{width:.9em;height:.9em;flex:0 0 auto}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+  .marquee.tilt{transform:rotate(-2.5deg) scale(1.04);margin:-14px 0}
+  .marquee.reverse .track{animation-direction:reverse;animation-duration:26s}
+  .marquee.dark{background:var(--negro);color:var(--crema)}
+  .marquee.rosa{background:var(--rosa);color:var(--crema)}
+
+  /* ============ HERO ============ */
+  #hero{
+    min-height:100vh;min-height:100svh;display:grid;place-items:center;
+    padding:9vh 5vw 14vh;overflow:hidden;
+  }
+  .halftone{
+    position:absolute;pointer-events:none;opacity:.28;
+    background-image:radial-gradient(var(--negro) 1.6px,transparent 2px);
+    background-size:16px 16px;
+  }
+  #hero .halftone{top:6%;right:4%;width:34vmin;height:34vmin;border-radius:50%}
+  #hero-inner{position:relative;text-align:center;width:100%;max-width:1200px}
+  #hero-kicker{
+    display:inline-block;font-family:var(--black);font-size:clamp(11px,1.3vw,15px);
+    letter-spacing:.3em;text-transform:uppercase;
+    background:var(--negro);color:var(--lima);
+    padding:9px 20px;border-radius:99px;margin-bottom:3.5vh;
+    transform:rotate(-2deg);
+  }
+  #hero-title{
+    font-family:var(--display);font-weight:400;line-height:.94;
+    font-size:clamp(52px,12.5vw,175px);
+    text-transform:uppercase;color:var(--crema);
+    text-shadow:5px 5px 0 var(--negro);
+  }
+  #hero-title .line{display:block;overflow:visible}
+  #hero-title .w{display:inline-block;will-change:transform}
+  #hero-title .outline{
+    color:transparent;-webkit-text-stroke:3px var(--negro);text-shadow:none;
+  }
+  #hero-sub{
+    font-size:clamp(17px,2.2vw,24px);margin-top:3vh;color:var(--negro);
+    font-weight:500;
+  }
+  #hero-sub em{font-family:var(--serif);font-style:italic;font-size:1.15em}
+  #hero-blob{
+    position:relative;width:min(46vh,72vw);margin:4.5vh auto 0;
+    aspect-ratio:3/4;
+    border:4px solid var(--negro);
+    box-shadow:10px 10px 0 var(--negro);
+    overflow:hidden;
+    border-radius:58% 42% 55% 45% / 52% 48% 52% 48%;
+    animation:blobmorph 9s ease-in-out infinite;
+    will-change:border-radius;
+  }
+  #hero-blob img{width:100%;height:100%;object-fit:cover}
+  @keyframes blobmorph{
+    0%,100%{border-radius:58% 42% 55% 45% / 52% 48% 52% 48%}
+    33%{border-radius:44% 56% 48% 52% / 58% 44% 56% 42%}
+    66%{border-radius:52% 48% 60% 40% / 44% 58% 42% 56%}
+  }
+  .gloss{position:relative;overflow:hidden}
+  .gloss::after{
+    content:"";position:absolute;top:-20%;left:0;width:55%;height:140%;
+    background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);
+    transform:translateX(-220%) rotate(4deg);
+    animation:sweep 3.6s cubic-bezier(.45,.05,.55,.95) infinite;
+    pointer-events:none;
+  }
+  @keyframes sweep{
+    0%{transform:translateX(-220%) rotate(4deg)}
+    45%,100%{transform:translateX(340%) rotate(4deg)}
+  }
+  .sticker{
+    position:absolute;pointer-events:none;will-change:transform;
+    filter:drop-shadow(3px 3px 0 rgba(26,15,30,.85));
+  }
+  .sticker svg{width:100%;height:100%;display:block}
+  .float{animation:floaty 5.5s ease-in-out infinite}
+  @keyframes floaty{
+    0%,100%{transform:translateY(0) rotate(-6deg)}
+    50%{transform:translateY(-16px) rotate(7deg)}
+  }
+  .spin-slow{animation:spinslow 14s linear infinite}
+  @keyframes spinslow{to{transform:rotate(360deg)}}
+  .blink{animation:blink 2.2s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+  /* ============ CORTES (sticky shots) ============ */
+  #cortes{background:transparent}
+  .shot-wrap{height:100vh;height:100svh;position:relative}
+  .shot{
+    position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+    display:grid;place-items:center;
+  }
+  .shot .media{position:absolute;inset:0;overflow:hidden}
+  .shot .media img{
+    width:100%;height:100%;object-fit:cover;will-change:transform;
+    transform:scale(1.15);
+  }
+  .shot .palabra{
+    position:relative;z-index:4;
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(90px,24vw,340px);line-height:1;
+    color:transparent;-webkit-text-stroke:4px var(--crema);
+    mix-blend-mode:normal;
+    filter:drop-shadow(6px 6px 0 rgba(26,15,30,.55));
+  }
+  .shot .pie{
+    position:absolute;bottom:6%;left:0;width:100%;text-align:center;z-index:4;
+    font-family:var(--black);font-size:clamp(12px,1.4vw,17px);
+    letter-spacing:.22em;text-transform:uppercase;color:var(--crema);
+    text-shadow:2px 2px 0 var(--negro);
+  }
+
+  /* ============ EL MENÚ (reel horizontal) ============ */
+  #menu{overflow:hidden}
+  #reel{height:100vh;height:100svh;display:flex;align-items:center;overflow:hidden}
+  #reel-track{
+    display:flex;gap:4vw;align-items:center;will-change:transform;
+    padding:0 max(6vw, env(safe-area-inset-left, 0px)) 0 max(6vw, env(safe-area-inset-right, 0px));
+  }
+  /* En táctil / pantallas chicas / landscape corto: reel NATIVO con scroll-snap
+     (mejor práctica: pin+scrub solo en desktop con altura suficiente) */
+  @media (max-width:799px), (max-height:500px){
+    #reel{height:auto;padding:12vh 0 8vh}
+    #reel-track{
+      overflow-x:auto;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;
+      padding-top:2vh;padding-bottom:3vh;
+    }
+    #reel-track::-webkit-scrollbar{display:none}
+    .reel-intro{scroll-snap-align:start}
+    .card{scroll-snap-align:center}
+  }
+  .reel-intro{
+    flex:0 0 auto;width:min(560px,80vw);
+  }
+  .reel-intro h2{
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(44px,7.5vw,110px);line-height:.95;color:var(--crema);
+    text-shadow:4px 4px 0 var(--negro);
+  }
+  .reel-intro p{
+    margin-top:2.5vh;font-size:clamp(16px,1.8vw,21px);font-weight:500;color:var(--crema);
+  }
+  .reel-intro p em{font-family:var(--serif);font-style:italic;font-size:1.15em}
+  .card{
+    flex:0 0 auto;width:min(380px,74vw);
+    border:4px solid var(--negro);box-shadow:8px 8px 0 var(--negro);
+    background:var(--blanco);will-change:transform;
+    transform-origin:center center;
+  }
+  .card .ph{aspect-ratio:4/5;overflow:hidden;border-bottom:4px solid var(--negro)}
+  .card .ph img{width:100%;height:100%;object-fit:cover}
+  .card .info{padding:20px 22px 24px}
+  .card .nombre{
+    font-family:var(--black);font-size:clamp(17px,1.8vw,22px);
+    text-transform:uppercase;letter-spacing:.03em;
+  }
+  .card .desc{font-size:14.5px;margin-top:6px;color:#3d2f42}
+  .card .precio{
+    font-family:var(--display);font-size:clamp(30px,3.4vw,44px);
+    margin-top:12px;line-height:1;
+  }
+  .card.c1 .info{background:var(--mantequilla)}
+  .card.c2 .info{background:#FFB3D9}
+  .card.c3 .info{background:var(--lima)}
+  .card.c4 .info{background:#9BD0FF}
+  .card.c5 .info{background:var(--crema)}
+
+  /* ============ NEON ROOM ============ */
+  #neon{min-height:100vh;min-height:100svh;overflow:hidden}
+  #neon-pin{height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden}
+  @media (max-height:500px){
+    #neon-pin{height:auto;min-height:100svh;padding:10vh 0}
+  }
+  #neon-title{
+    position:absolute;z-index:2;text-align:center;
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(40px,9vw,130px);line-height:1;color:var(--lima);
+    text-shadow:0 0 18px rgba(198,255,71,.75),0 0 60px rgba(198,255,71,.4);
+    will-change:transform,opacity;padding:0 5vw;
+  }
+  .neon-ph{
+    position:absolute;width:min(34vh,60vw);aspect-ratio:2/3;overflow:hidden;
+    border:4px solid var(--lima);box-shadow:0 0 26px rgba(198,255,71,.35);
+    will-change:transform;
+  }
+  .neon-ph img{width:100%;height:100%;object-fit:cover}
+  #neon-ph1{left:8%;top:14%;transform:rotate(-5deg)}
+  #neon-ph2{right:8%;bottom:10%;transform:rotate(4deg)}
+  #neon-caption{
+    position:absolute;bottom:7%;width:100%;text-align:center;z-index:3;
+    font-family:var(--black);letter-spacing:.24em;text-transform:uppercase;
+    font-size:clamp(11px,1.3vw,15px);color:#FFB3D9;
+    text-shadow:0 0 14px rgba(255,179,217,.8);
+  }
+
+  /* ============ GALERÍA STICKER-SHEET ============ */
+  #galeria{padding:14vh 5vw 10vh}
+  #galeria h2{
+    text-align:center;
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(40px,8vw,110px);line-height:.95;color:var(--negro);
+  }
+  #galeria .gsub{
+    text-align:center;font-size:clamp(16px,1.9vw,22px);margin-top:1.5vh;font-weight:500;
+  }
+  #galeria .gsub em{font-family:var(--serif);font-style:italic;font-size:1.15em}
+  #collage{
+    position:relative;max-width:1250px;margin:7vh auto 0;
+    display:grid;grid-template-columns:repeat(12,1fr);gap:3.2vw 2vw;
+    align-items:start;
+  }
+  .pola{
+    background:var(--blanco);border:4px solid var(--negro);
+    box-shadow:7px 7px 0 var(--negro);padding:10px 10px 40px;
+    position:relative;will-change:transform;
+  }
+  .pola .ph{overflow:hidden}
+  .pola img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1.05}
+  .pola .tag{
+    position:absolute;bottom:9px;left:0;width:100%;text-align:center;
+    font-family:var(--black);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .pola.p1{grid-column:1/5;transform:rotate(-4deg)}
+  .pola.p2{grid-column:5/9;transform:rotate(2.5deg);margin-top:5vh}
+  .pola.p3{grid-column:9/13;transform:rotate(-2deg)}
+  .pola.p4{grid-column:2/6;transform:rotate(3deg);margin-top:2vh}
+  .pola.p5{grid-column:6/10;transform:rotate(-3.5deg);margin-top:7vh}
+  .pola.p6{grid-column:10/13;transform:rotate(4deg);margin-top:1vh}
+  @media (max-width:799px){
+    .pola.p1,.pola.p4{grid-column:1/8}
+    .pola.p2,.pola.p5{grid-column:5/13}
+    .pola.p3{grid-column:2/9}
+    .pola.p6{grid-column:6/13}
+  }
+
+  /* ============ CIERRE ============ */
+  #cierre{
+    min-height:100svh;display:grid;place-items:center;
+    text-align:center;padding:14vh 6vw 0;overflow:hidden;
+  }
+  #cierre .halftone{bottom:10%;left:5%;width:28vmin;height:28vmin;border-radius:50%}
+  #cierre-title{
+    font-family:var(--display);font-weight:400;text-transform:uppercase;
+    font-size:clamp(42px,9.5vw,130px);line-height:1;color:var(--negro);
+  }
+  #cierre-title em{
+    font-family:var(--serif);font-style:italic;text-transform:none;
+    font-size:1.05em;letter-spacing:0;
+  }
+  #cierre-sub{margin-top:3vh;font-size:clamp(16px,2vw,22px);font-weight:500}
+  #cta{
+    display:inline-block;margin-top:5vh;
+    font-family:var(--black);font-size:clamp(18px,2.4vw,28px);
+    text-transform:uppercase;letter-spacing:.08em;text-decoration:none;
+    color:var(--crema);background:var(--negro);
+    border:4px solid var(--negro);border-radius:99px;
+    padding:22px 58px;
+    box-shadow:8px 8px 0 var(--rosa);
+    animation:pulse 2.6s cubic-bezier(.45,.05,.55,.95) infinite;
+    transition:background .2s cubic-bezier(.23,1,.32,1),color .2s cubic-bezier(.23,1,.32,1);
+  }
+  @media (hover:hover) and (pointer:fine){
+    #cta:hover{background:var(--rosa);color:var(--negro)}
+  }
+  #cta:focus-visible{outline:4px solid var(--cobalto);outline-offset:4px}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  #badge{
+    position:absolute;top:8%;right:6%;width:clamp(110px,14vw,180px);
+    animation:spinslow 16s linear infinite;
+  }
+  #badge text{
+    font-family:var(--black);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;
+    fill:var(--negro);
+  }
+  #cierre-datos{
+    margin:6vh 0 8vh;font-family:var(--black);
+    font-size:clamp(11px,1.3vw,14px);letter-spacing:.26em;text-transform:uppercase;
+  }
+  #cierre .marquee{width:100vw;margin-left:calc(50% - 50vw)}
+
+  @media (max-width:799px){
+    #hero .sticker{width:34px!important}
+    #hero .sticker.spin-slow{top:10%!important;right:4%!important}
+    #hero-sub{position:relative;z-index:6;padding:0 6vw}
+  }
+  /* safe areas (notch / home indicator) */
+  .marquee.rosa{padding-bottom:calc(14px + env(safe-area-inset-bottom, 0px))}
+  #cierre{padding-inline:max(6vw, env(safe-area-inset-left, 0px)) }
+
+  /* ============ REDUCED MOTION ============ */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .shot .media img{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"><span></span></div>
+
+<!-- símbolos sticker -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sym-sparkle" viewBox="0 0 40 40">
+    <path d="M20 1l4.2 12.6L37 18l-12.8 4.4L20 35l-4.2-12.6L3 18l12.8-4.4z" fill="#FFE347" stroke="#1A0F1E" stroke-width="2.4"/>
+  </symbol>
+  <symbol id="sym-flor" viewBox="0 0 48 48">
+    <g stroke="#1A0F1E" stroke-width="2.4">
+      <circle cx="24" cy="10" r="8" fill="#FF2E93"/>
+      <circle cx="37" cy="19" r="8" fill="#FF2E93"/>
+      <circle cx="32" cy="34" r="8" fill="#FF2E93"/>
+      <circle cx="16" cy="34" r="8" fill="#FF2E93"/>
+      <circle cx="11" cy="19" r="8" fill="#FF2E93"/>
+      <circle cx="24" cy="23" r="7" fill="#FFE347"/>
+    </g>
+  </symbol>
+  <symbol id="sym-gota" viewBox="0 0 34 44">
+    <path d="M17 2C22 12 31 20 31 29a14 14 0 1 1-28 0C3 20 12 12 17 2z" fill="#2447F5" stroke="#1A0F1E" stroke-width="2.4"/>
+    <ellipse cx="12.5" cy="28" rx="3" ry="5" fill="#9BD0FF" transform="rotate(-18 12.5 28)"/>
+  </symbol>
+  <symbol id="sym-corazon" viewBox="0 0 44 40">
+    <path d="M22 38C10 28 2 21 2 12A10 10 0 0 1 22 8a10 10 0 0 1 20 4c0 9-8 16-20 26z" fill="#C6FF47" stroke="#1A0F1E" stroke-width="2.4"/>
+  </symbol>
+</svg>
+
+<!-- ============ 1 · HERO ============ -->
+<section id="hero" data-bg="#FF2E93" data-fg="#1A0F1E" aria-label="Gloss Club">
+  <div class="halftone" aria-hidden="true"></div>
+  <span class="sticker float" style="top:12%;left:7%;width:clamp(38px,5vw,68px)" aria-hidden="true"><svg><use href="#sym-sparkle"/></svg></span>
+  <span class="sticker spin-slow" style="top:22%;right:10%;width:clamp(44px,6vw,80px)" aria-hidden="true"><svg><use href="#sym-flor"/></svg></span>
+  <span class="sticker float" style="bottom:24%;left:11%;width:clamp(34px,4.5vw,60px);animation-delay:-2.4s" aria-hidden="true"><svg><use href="#sym-gota"/></svg></span>
+  <span class="sticker blink" style="bottom:30%;right:7%;width:clamp(40px,5.5vw,72px)" aria-hidden="true"><svg><use href="#sym-corazon"/></svg></span>
+  <span class="sticker blink" style="top:44%;left:3%;width:clamp(24px,3vw,40px);animation-delay:-1.1s" aria-hidden="true"><svg><use href="#sym-sparkle"/></svg></span>
+
+  <div id="hero-inner">
+    <span id="hero-kicker">ESTUDIO DE UÑAS · SOLO CITA</span>
+    <h1 id="hero-title">
+      <span class="line"><span class="w">GLOSS</span></span>
+      <span class="line"><span class="w outline">CLUB</span></span>
+    </h1>
+    <p id="hero-sub">Uñas que hablan <em>por ti</em>. Gel, Y2K, chrome y flores 3D.</p>
+    <div id="hero-blob" class="gloss">
+      <img src="https://images.pexels.com/photos/34121866/pexels-photo-34121866.jpeg?auto=compress&cs=tinysrgb&w=1200"
+           srcset="https://images.pexels.com/photos/34121866/pexels-photo-34121866.jpeg?auto=compress&cs=tinysrgb&w=480 480w,
+                   https://images.pexels.com/photos/34121866/pexels-photo-34121866.jpeg?auto=compress&cs=tinysrgb&w=800 800w,
+                   https://images.pexels.com/photos/34121866/pexels-photo-34121866.jpeg?auto=compress&cs=tinysrgb&w=1200 1200w"
+           sizes="(max-width: 799px) 72vw, 40vw" fetchpriority="high"
+           alt="Uñas stiletto maximalistas con flores 3D rosas y naranjas" referrerpolicy="no-referrer">
+    </div>
+  </div>
+</section>
+
+<div class="marquee tilt" aria-hidden="true">
+  <div class="track">
+    <span>GEL</span><svg><use href="#sym-sparkle"/></svg>
+    <span>FRANCESA Y2K</span><svg><use href="#sym-corazon"/></svg>
+    <span>CHROME</span><svg><use href="#sym-sparkle"/></svg>
+    <span>CAT-EYE</span><svg><use href="#sym-flor"/></svg>
+    <span>FLORES 3D</span><svg><use href="#sym-gota"/></svg>
+    <span>GEL</span><svg><use href="#sym-sparkle"/></svg>
+    <span>FRANCESA Y2K</span><svg><use href="#sym-corazon"/></svg>
+    <span>CHROME</span><svg><use href="#sym-sparkle"/></svg>
+    <span>CAT-EYE</span><svg><use href="#sym-flor"/></svg>
+    <span>FLORES 3D</span><svg><use href="#sym-gota"/></svg>
+  </div>
+</div>
+
+<!-- ============ 2 · CORTES ============ -->
+<section id="cortes" aria-label="Nuestros looks">
+  <div class="shot-wrap" data-bg="#C6FF47" data-fg="#1A0F1E">
+    <div class="shot">
+      <div class="media"><img src="https://images.pexels.com/photos/5871824/pexels-photo-5871824.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Manos cruzadas con uñas multicolor sobre pared verde" loading="lazy" referrerpolicy="no-referrer"></div>
+      <div class="palabra">POP</div>
+      <p class="pie">UN COLOR POR DEDO · SIN MIEDO</p>
+    </div>
+  </div>
+  <div class="shot-wrap" data-bg="#FF2E93" data-fg="#1A0F1E">
+    <div class="shot">
+      <div class="media"><img src="https://images.pexels.com/photos/5871311/pexels-photo-5871311.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Mano con confeti cayendo sobre fondo magenta" loading="lazy" referrerpolicy="no-referrer"></div>
+      <div class="palabra">WOW</div>
+      <p class="pie">EL SET QUE PARA LA FIESTA</p>
+    </div>
+  </div>
+  <div class="shot-wrap" data-bg="#2447F5" data-fg="#FFF4E4">
+    <div class="shot">
+      <div class="media"><img src="https://images.pexels.com/photos/11026126/pexels-photo-11026126.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Dos manos con uñas cobalto intercambiando un teléfono amarillo sobre fondo fucsia" loading="lazy" referrerpolicy="no-referrer"></div>
+      <div class="palabra">MÁS</div>
+      <p class="pie">SIEMPRE SE PUEDE MÁS</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 · EL MENÚ (reel horizontal) ============ -->
+<section id="menu" data-bg="#2447F5" data-fg="#FFF4E4" aria-label="Menú de servicios">
+  <div id="reel">
+    <div id="reel-track">
+      <div class="reel-intro">
+        <h2>EL<br>MENÚ</h2>
+        <p>Cinco maneras de no pasar <em>desapercibida</em>. Arrastra o sigue bajando.</p>
+      </div>
+      <article class="card c1">
+        <div class="ph gloss"><img src="https://images.pexels.com/photos/36655811/pexels-photo-36655811.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Uñas almendra rosa pastel lechoso" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="info">
+          <h3 class="nombre">Gel liso</h3>
+          <p class="desc">Color pleno, brillo espejo, tres semanas intacto.</p>
+          <p class="precio">$380</p>
+        </div>
+      </article>
+      <article class="card c2">
+        <div class="ph gloss"><img src="https://images.pexels.com/photos/34835286/pexels-photo-34835286.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Uñas rosa bebé con puntas de glitter azul sobre peluche rojo" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="info">
+          <h3 class="nombre">Francesa Y2K</h3>
+          <p class="desc">La francesa de siempre, pero en technicolor.</p>
+          <p class="precio">$450</p>
+        </div>
+      </article>
+      <article class="card c3">
+        <div class="ph gloss"><img src="https://images.pexels.com/photos/939836/pexels-photo-939836.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Manicure rosa chicle con uña de glitter plateado" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="info">
+          <h3 class="nombre">Cat-eye</h3>
+          <p class="desc">Gel magnético: una galaxia en cada uña.</p>
+          <p class="precio">$520</p>
+        </div>
+      </article>
+      <article class="card c4">
+        <div class="ph gloss"><img src="https://images.pexels.com/photos/5871823/pexels-photo-5871823.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Manos con uñas de colores y sombras de sol sobre pared verde" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="info">
+          <h3 class="nombre">Chrome</h3>
+          <p class="desc">Espejo líquido: plata, aurora o el tono que traigas en mente.</p>
+          <p class="precio">$520</p>
+        </div>
+      </article>
+      <article class="card c5">
+        <div class="ph gloss"><img src="https://images.pexels.com/photos/5871825/pexels-photo-5871825.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Editorial de manos con nail art enmarcando un rostro" loading="lazy" referrerpolicy="no-referrer"></div>
+        <div class="info">
+          <h3 class="nombre">Flores 3D</h3>
+          <p class="desc">Esculpidas a mano, pieza única. Trae tu idea más loca.</p>
+          <p class="precio">$650+</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 · NEON ROOM ============ -->
+<section id="neon" data-bg="#1A0F1E" data-fg="#FFF4E4" aria-label="Neon room">
+  <div id="neon-pin">
+    <div class="neon-ph" id="neon-ph1"><img src="https://images.pexels.com/photos/5871831/pexels-photo-5871831.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Manos con uñas neón brillando bajo luz ultravioleta" loading="lazy" referrerpolicy="no-referrer"></div>
+    <div class="neon-ph" id="neon-ph2"><img src="https://images.pexels.com/photos/5871834/pexels-photo-5871834.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Manicure en proceso con esmalte neón bajo luz negra" loading="lazy" referrerpolicy="no-referrer"></div>
+    <h2 id="neon-title">DE NOCHE<br>TAMBIÉN BRILLAN</h2>
+    <p id="neon-caption">GEL NEÓN REACTIVO UV · PÍDELO PARA TU PRÓXIMA FIESTA</p>
+  </div>
+</section>
+
+<!-- ============ 5 · GALERÍA ============ -->
+<section id="galeria" data-bg="#FFF4E4" data-fg="#1A0F1E" aria-label="Galería">
+  <h2>LA GALERÍA</h2>
+  <p class="gsub">La <em>prueba</em> de que aquí no hacemos uñas aburridas.</p>
+  <div id="collage">
+    <figure class="pola p1"><div class="ph gloss"><img src="https://images.pexels.com/photos/7066298/pexels-photo-7066298.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Mano con esmaltes rosa, amarillo y azul en abanico" loading="lazy" referrerpolicy="no-referrer"></div><figcaption class="tag">TRÍO PRIMARIO</figcaption></figure>
+    <figure class="pola p2"><div class="ph gloss"><img src="https://images.pexels.com/photos/2622185/pexels-photo-2622185.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Mano con esmalte blanco sosteniendo un limón" loading="lazy" referrerpolicy="no-referrer"></div><figcaption class="tag">EXPRIMIDO</figcaption></figure>
+    <figure class="pola p3"><div class="ph"><img src="https://i.giphy.com/media/auQcfvRxpxNOdvjXY5/giphy.gif" alt="GIF de esmalte goteando" loading="lazy" referrerpolicy="no-referrer"></div><figcaption class="tag">RECIÉN SERVIDO</figcaption></figure>
+    <figure class="pola p4"><div class="ph gloss"><img src="https://images.pexels.com/photos/29229021/pexels-photo-29229021.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Tres botes de esmalte sobre fondo cian" loading="lazy" referrerpolicy="no-referrer"></div><figcaption class="tag">LA CARTA</figcaption></figure>
+    <figure class="pola p5"><div class="ph"><img src="https://i.giphy.com/media/58FNtCbsokpPnXef5T/giphy.gif" alt="GIF de uñas pastel arcoíris" loading="lazy" referrerpolicy="no-referrer"></div><figcaption class="tag">ARCOÍRIS</figcaption></figure>
+    <figure class="pola p6"><div class="ph gloss"><img src="https://images.pexels.com/photos/5874857/pexels-photo-5874857.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Brazo atravesando un círculo verde en pared azul con uñas de cebra" loading="lazy" referrerpolicy="no-referrer"></div><figcaption class="tag">POR EL ARO</figcaption></figure>
+  </div>
+</section>
+
+<div class="marquee reverse dark" aria-hidden="true">
+  <div class="track">
+    <span>CUPOS LIMITADOS</span><svg><use href="#sym-sparkle"/></svg>
+    <span>SE RESERVA POR SEMANA</span><svg><use href="#sym-corazon"/></svg>
+    <span>CUPOS LIMITADOS</span><svg><use href="#sym-sparkle"/></svg>
+    <span>SE RESERVA POR SEMANA</span><svg><use href="#sym-corazon"/></svg>
+    <span>CUPOS LIMITADOS</span><svg><use href="#sym-sparkle"/></svg>
+    <span>SE RESERVA POR SEMANA</span><svg><use href="#sym-corazon"/></svg>
+  </div>
+</div>
+
+<!-- ============ 6 · CIERRE ============ -->
+<section id="cierre" data-bg="#FFE347" data-fg="#1A0F1E" aria-label="Reserva">
+  <div class="halftone" aria-hidden="true"></div>
+  <svg id="badge" viewBox="0 0 120 120" aria-hidden="true">
+    <defs><path id="badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+    <circle cx="60" cy="60" r="56" fill="#FF2E93" stroke="#1A0F1E" stroke-width="4"/>
+    <text><textPath href="#badge-circle">GLOSS CLUB · CUPOS LIMITADOS · GLOSS CLUB ·</textPath></text>
+    <path d="M60 42l4.6 13.4 14.2.4-11.3 8.6 4.1 13.6-11.6-8.2-11.6 8.2 4.1-13.6-11.3-8.6 14.2-.4z" fill="#FFE347" stroke="#1A0F1E" stroke-width="2.4"/>
+  </svg>
+  <div>
+    <h2 id="cierre-title">¿NOS VEMOS<br>EL <em>viernes</em>?</h2>
+    <p id="cierre-sub">Los cupos de la semana se abren cada lunes a las 10:00.</p>
+    <a id="cta" href="#reserva">RESERVAR ✦</a>
+    <p id="cierre-datos">MAR – SÁB · 10:00 – 19:00 · GUADALAJARA · SOLO CITA</p>
+  </div>
+</section>
+
+<div class="marquee rosa" aria-hidden="true">
+  <div class="track">
+    <span>GLOSS CLUB</span><svg><use href="#sym-flor"/></svg>
+    <span>UÑAS QUE HABLAN POR TI</span><svg><use href="#sym-sparkle"/></svg>
+    <span>GLOSS CLUB</span><svg><use href="#sym-flor"/></svg>
+    <span>UÑAS QUE HABLAN POR TI</span><svg><use href="#sym-sparkle"/></svg>
+    <span>GLOSS CLUB</span><svg><use href="#sym-flor"/></svg>
+    <span>UÑAS QUE HABLAN POR TI</span><svg><use href="#sym-sparkle"/></svg>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var FINE = window.matchMedia("(pointer: fine)").matches;
+
+  /* marquees: pausa fuera de pantalla */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var track = e.target.querySelector(".track");
+      if (track) track.style.animationPlayState = e.isIntersecting ? "running" : "paused";
+    });
+  }, { rootMargin: "80px" });
+  document.querySelectorAll(".marquee").forEach(function(m){ io.observe(m); });
+
+  /* ============ SRCSET RESPONSIVO para fotos Pexels (lazy) ============
+     Genera variantes w=480/800/1200/1600 antes de que el lazy-load dispare;
+     escala h proporcionalmente cuando hay crop. */
+  function pexelsVariant(src, w){
+    var m = src.match(/[?&]w=(\d+)/); var baseW = m ? +m[1] : 1600;
+    var out = src.replace(/([?&])w=\d+/, "$1w=" + w);
+    var hm = src.match(/[?&]h=(\d+)/);
+    if (hm) out = out.replace(/([?&])h=\d+/, "$1h=" + Math.round(+hm[1] * w / baseW));
+    return out;
+  }
+  document.querySelectorAll('img[src*="images.pexels.com"]').forEach(function(img){
+    if (img.srcset) return;
+    img.srcset = [480, 800, 1200, 1600].map(function(w){
+      return pexelsVariant(img.src, w) + " " + w + "w";
+    }).join(", ");
+    img.sizes = img.closest(".card") ? "(max-width: 799px) 74vw, 380px"
+      : img.closest(".pola") ? "(max-width: 799px) 60vw, 30vw"
+      : img.closest(".neon-ph") ? "(max-width: 799px) 60vw, 34vw"
+      : "100vw";
+  });
+
+  if (REDUCED) return; /* versión estática completa: todo el contenido ya está en flujo */
+
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
+  /* ============ LENIS (un solo RAF) ============ */
+  var lenis = new Lenis({ autoRaf: false, lerp: 0.1, syncTouch: false });
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
+  gsap.ticker.lagSmoothing(0);
+
+  var mm = gsap.matchMedia();
+
+  /* ============ HERO: coreografía de entrada ============ */
+  gsap.timeline()
+    .from("#hero-kicker", { y: -34, opacity: 0, duration: .55, ease: "back.out(2)" }, .15)
+    .from("#hero-title .w", { yPercent: 130, rotation: 6, duration: .8, stagger: .12, ease: "expo.out" }, .25)
+    .from("#hero-sub", { y: 24, opacity: 0, duration: .5, ease: "expo.out" }, .75)
+    .from("#hero-blob", { scale: 0, rotation: -10, duration: .9, ease: "elastic.out(1,.55)" }, .85)
+    .from("#hero .sticker", { scale: 0, duration: .5, stagger: .07, ease: "back.out(3)", clearProps: "scale" }, .9);
+
+  /* parallax de stickers del hero */
+  document.querySelectorAll("#hero .sticker").forEach(function(st, i){
+    gsap.to(st, {
+      y: -(60 + i * 45), ease: "none",
+      scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
+    });
+  });
+  gsap.to("#hero-inner", {
+    yPercent: -12, ease: "none",
+    scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
+  });
+
+  /* ============ CORTES: Ken Burns por shot (el corte lo hace sticky) ============ */
+  gsap.utils.toArray("#cortes .shot-wrap").forEach(function(wrap){
+    gsap.fromTo(wrap.querySelector(".media img"),
+      { scale: 1.18, yPercent: 4 },
+      { scale: 1, yPercent: -3, ease: "none",
+        scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: true } });
+    gsap.fromTo(wrap.querySelector(".palabra"),
+      { scale: .7, opacity: 0 },
+      { scale: 1, opacity: 1, ease: "none",
+        scrollTrigger: { trigger: wrap, start: "top 70%", end: "top 15%", scrub: true } });
+  });
+
+  /* ============ EL MENÚ: reel horizontal ============
+     Desktop con altura suficiente: pinned + scrub. Táctil/chico/landscape corto:
+     scroll-x nativo con snap (definido en CSS) — mejor práctica en touch. */
+  var track = document.getElementById("reel-track");
+  ScrollTrigger.saveStyles(".card, .pola, #reel-track");
+  mm.add("(min-width: 800px) and (min-height: 501px)", function(){
+    gsap.to(track, {
+      x: function(){ return -(track.scrollWidth - window.innerWidth + 60); },
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#menu", pin: true, scrub: 1, anticipatePin: 1,
+        end: function(){ return "+=" + (track.scrollWidth - window.innerWidth + 200); },
+        invalidateOnRefresh: true
+      }
+    });
+
+    /* skew por velocidad en cards y polaroids (solo desktop) */
+    var proxy = { skew: 0 };
+    var skewSetter = gsap.quickSetter(".card, .pola", "skewY", "deg");
+    var clamp = gsap.utils.clamp(-9, 9);
+    ScrollTrigger.create({
+      onUpdate: function(self){
+        var skew = clamp(self.getVelocity() / -350);
+        if (Math.abs(skew) > Math.abs(proxy.skew)){
+          proxy.skew = skew;
+          gsap.to(proxy, { skew: 0, duration: .7, ease: "power3",
+            overwrite: true, onUpdate: function(){ skewSetter(proxy.skew); } });
+        }
+      }
+    });
+  });
+
+  /* ============ NEON ROOM: zoom-through del titular ============
+     Sin pin en viewports cortos (landscape de teléfono): composición estática. */
+  mm.add("(min-height: 501px)", function(){
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: "#neon", pin: "#neon-pin", start: "top top",
+        end: "+=160%", scrub: 1, anticipatePin: 1
+      }
+    })
+      .fromTo("#neon-title", { scale: .6, opacity: 0 }, { scale: 1, opacity: 1, duration: .8, ease: "none" }, 0)
+      .fromTo("#neon-ph1", { yPercent: 70, rotation: -10 }, { yPercent: -8, rotation: -5, duration: 2.4, ease: "none" }, 0)
+      .fromTo("#neon-ph2", { yPercent: 110, rotation: 9 }, { yPercent: -4, rotation: 4, duration: 2.4, ease: "none" }, .2)
+      .fromTo("#neon-caption", { opacity: 0 }, { opacity: 1, duration: .4, ease: "none" }, .9)
+      .to("#neon-title", { scale: 5.2, opacity: 0, duration: 1.1, ease: "power1.in" }, 1.6)
+      .to("#neon-caption", { opacity: 0, duration: .3, ease: "none" }, 1.9);
+  });
+
+  /* ============ GALERÍA: reveal escalonado ============ */
+  ScrollTrigger.batch(".pola", {
+    start: "top 88%",
+    once: true,
+    onEnter: function(batch){
+      gsap.from(batch, { scale: 0, rotation: function(i, el){ return gsap.getProperty(el, "rotation") - 14; },
+        opacity: 0, duration: .7, stagger: .1, ease: "back.out(1.8)", clearProps: "opacity" });
+    }
+  });
+
+  /* ============ CIERRE: entrada ============ */
+  gsap.from("#cierre-title, #cierre-sub, #cta, #cierre-datos", {
+    y: 44, opacity: 0, duration: .7, stagger: .09, ease: "expo.out",
+    scrollTrigger: { trigger: "#cierre", start: "top 70%", once: true }
+  });
+
+  /* ============ GRADE DE VIDEO: morph de color del body ============
+     Geometría viva (getBoundingClientRect): inmune a pin-spacers, resize y rotación. */
+  var gradeSections = gsap.utils.toArray("[data-bg]");
+  var currentGrade = null;
+  function updateGrade(){
+    var line = window.innerHeight * .55, pick = null;
+    for (var i = 0; i < gradeSections.length; i++){
+      var r = gradeSections[i].getBoundingClientRect();
+      if (r.top <= line && r.bottom >= line) pick = gradeSections[i];
+    }
+    if (pick && pick !== currentGrade){
+      currentGrade = pick;
+      gsap.to("body", { backgroundColor: pick.dataset.bg, color: pick.dataset.fg, duration: .55, overwrite: "auto" });
+    }
+  }
+  ScrollTrigger.create({ start: 0, end: "max", onUpdate: updateGrade });
+  ScrollTrigger.addEventListener("refresh", updateGrade);
+  updateGrade();
+
+  /* ============ CURSOR CUSTOM (solo pointer fino) ============ */
+  if (FINE){
+    var cursor = document.getElementById("cursor");
+    var label = cursor.querySelector("span");
+    cursor.style.display = "grid";
+    cursor.style.opacity = "0";
+    document.body.classList.add("cursor-on");
+    var cx = gsap.quickTo(cursor, "x", { duration: .28, ease: "power3" });
+    var cy = gsap.quickTo(cursor, "y", { duration: .28, ease: "power3" });
+    var shown = false;
+    window.addEventListener("mousemove", function(e){
+      if (!shown){ shown = true; gsap.set(cursor, { x: e.clientX, y: e.clientY }); gsap.to(cursor, { opacity: 1, duration: .2 }); }
+      cx(e.clientX); cy(e.clientY);
+    });
+    document.addEventListener("mouseover", function(e){
+      if (e.target.closest("#reel")){ cursor.className = "drag"; label.textContent = "DRAG"; }
+      else if (e.target.closest("a, button")){ cursor.className = "grow"; label.textContent = "CLICK"; }
+      else { cursor.className = ""; label.textContent = ""; }
+    });
+  }
+
+  /* refresh cuando cargan las imágenes (evita triggers desfasados) */
+  window.addEventListener("load", function(){ ScrollTrigger.refresh(); });
+})();
+</script>
+</body>
+</html>
